@@ -76,6 +76,7 @@ class EmployeeProvider with ChangeNotifier {
         'projectId': '66aa089339e2fdc09bbba300',
         'environmentId': '66aa089339e2fdc09bbba301',
       },
+      body: jsonEncode({})
     );
 
     if (response.statusCode == 200) {
