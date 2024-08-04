@@ -68,4 +68,22 @@ class EmployeeProvider with ChangeNotifier {
       throw Exception('Failed to create employee');
     }
   }
+
+  Future<void> deleteEmployee(String id) async {
+    final response = await http.delete(Uri.parse('$baseUrl/$id'),
+      headers: {
+        'Content-Type': 'application/json',
+        'projectId': '66aa089339e2fdc09bbba300',
+        'environmentId': '66aa089339e2fdc09bbba301',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // Employee deleted successfully
+      notifyListeners();
+    } else {
+      throw Exception('Failed to delete employee');
+    }
+  }
+
 }
