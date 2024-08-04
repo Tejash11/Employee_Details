@@ -69,6 +69,7 @@ class EmployeeProvider with ChangeNotifier {
     }
   }
 
+  //function to delete single employee
   Future<void> deleteEmployee(String id) async {
     final response = await http.delete(Uri.parse('$baseUrl/$id'),
       headers: {
