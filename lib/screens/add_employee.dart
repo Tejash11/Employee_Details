@@ -49,11 +49,23 @@ class AddEmployeeScreen extends StatelessWidget {
                 decoration: InputDecoration(labelText: 'Contact'),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(10), // Limits the input to 10 characters
                 ],
+                onChanged: (text) {
+                  if (text.length > 10) {
+                    _contactController.text = text.substring(0, 10);
+                    _contactController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: _contactController.text.length),
+                    );
+                  }
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a contact number';
+                  }
+                  if (value.length > 10) {
+                    return 'Contact number cannot exceed 10 digits';
                   }
                   if (int.tryParse(value) == null) {
                     return 'Please enter a valid number';
@@ -67,6 +79,10 @@ class AddEmployeeScreen extends StatelessWidget {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a email';
+                  }
+                  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'Please enter a valid email address with @ symbol';
                   }
                   return null;
                 },
